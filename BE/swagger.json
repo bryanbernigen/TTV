@@ -87,7 +87,7 @@
                         "description": "ID of user to return",
                         "required": true,
                         "schema": {
-                            "$ref": "#/components/example/id"
+                            "$ref": "#/components/example/authorId"
                         }
                     }
                 ],
@@ -116,6 +116,207 @@
                     }
                 }
             }
+        },
+        "/article/add": {
+            "post": {
+                "tags": [
+                    "Article"
+                ],
+                "summary": "Add new article",
+                "description": "Add new article",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/addArticle"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "201": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "example": "success"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Article added successfully"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid input",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorSchema400"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/article/{articleId}": {
+            "get": {
+                "tags": [
+                    "Article"
+                ],
+                "summary": "Get article by id",
+                "description": "Get article by id",
+                "parameters": [
+                    {
+                        "name": "articleId",
+                        "in": "path",
+                        "description": "ID of article to return",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/components/example/articleId"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "example": "success"
+                                        },
+                                        "article": {
+                                            "$ref": "#/components/schemas/article"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Article not found"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Article"
+                ],
+                "summary": "Update article by id",
+                "description": "Update article by id",
+                "parameters": [
+                    {
+                        "name": "articleId",
+                        "in": "path",
+                        "description": "ID of article to return",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/components/example/articleId"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/addArticle"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "example": "success"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Article updated successfully"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid input",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorSchema400"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Article not found"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Article"
+                ],
+                "summary": "Delete article by id",
+                "description": "Delete article by id",
+                "parameters": [
+                    {
+                        "name": "articleId",
+                        "in": "path",
+                        "description": "ID of article to return",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/components/example/articleId"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "example": "success"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Article deleted successfully"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Article not found"
+                    }
+                }
+            }
         }
     },
     "components": {
@@ -138,6 +339,161 @@
                     "description": {
                         "type": "string",
                         "example": "Adelia Marista Safitri, lulusan dari Universitas Diponegoro dengan gelar Sarjana Kesehatan Masyarakat tahun 2017. Mengawali karir sebagai jurnalis dan penulis di beberapa media kesehatan. Saat ini bergabung di HonestDocs sebagai penulis dan editor dengan harapan dapat memberikan informasi kesehatan yang sederhana tapi berkualitas, tepercaya, dan mudah dipahami oleh seluruh masyarakat."
+                    }
+                }
+            },
+            "addArticle": {
+                "type": "object",
+                "properties": {
+                    "title": {
+                        "type": "string",
+                        "example": "Tanda Tanda Vital (TTV): Pemeriksaan dan Nilai Normal"
+                    },
+                    "pictureUrl": {
+                        "type": "string",
+                        "example": "https://static.honestdocs.id/989x500/webp/system/blog_articles/main_hero_images/000/001/248/original/Tanda_Tanda_Vital_%28TTV%29_Pemeriksaan_dan_Nilai_Normal.jpg"
+                    },
+                    "authorId": {
+                        "$ref": "#/components/example/authorId"
+                    },
+                    "timeToRead": {
+                        "type": "integer",
+                        "example": 3
+                    },
+                    "summary": {
+                        "example": [
+                            "Pemeriksaan tanda-tanda vital (TTV) merupakan salah satu metode pemeriksaan untuk mengetahui ada tidaknya gangguan pada&nbsp;fungsi tubuh dasar. Hal ini bertujuan untuk&nbsp;membantu dokter mendiagnosis suatu penyakit dan merencanakan perawatan medis yang tepat.",
+                            "Dalam pemeriksaan&nbsp;tanda-tanda vital (TTV) ada 4 komponen tanda vital utama yang harus dipantau secara rutin dan seharusnya berada dalam kondisi normal, yaitu&nbsp;tekanan darah, denyut nadi, laju pernapasan, dan suhu tubuh.",
+                            "Tekanan darah normal&nbsp;untuk orang dewasa umumnya berada pada&nbsp;120/80 mmHg dengan respirasi normal atau laju pernapasan normal sekitar 12-20&nbsp;kali per menit. Sementara itu&nbsp;suhu tubuh normal&nbsp;untuk orang dewasa adalah 36,5- 37,5 derajat celsius.",
+                            "Untuk mendapatkan hasil TTV yang lebih valid, Anda juga bisa melakukan medical check up <a href='http://hdmall.id/pemeriksaan-kesehatan/paket-medical-check-up?utm_source=internal&amp;utm_medium=article&amp;utm_campaign=medical-check-up'>hanya di sini.</a>"
+                        ]
+                    },
+                    "content": {
+                        "example": [
+                            "<p>Untuk mendeteksi gangguan pada tubuh, dokter dapat melakukan pemeriksaan tanda-tanda vital (TTV). Ini merupakan metode atau pemeriksaan fungsi tubuh yang paling mendasar guna membantu dokter dalam mendiagnosis penyakit dan merencanakan perawatan medis yang tepat. Apa saja jenis pemeriksaan TTV? Berikut ulasan lengkapnya.</p>",
+                            "<h2>Apa itu TTV?</h2>",
+                            "<p>Pemeriksaan tanda-tanda vital atau TTV adalah prosedur pemeriksaan yang dilakukan untuk mengetahui tanda vital seseorang. Hal ini bertujuan untuk mendeteksi gangguan, kelainan, atau perubahan pada fungsi organ tubuh.</p>",
+                            "<p>Pemeriksaan TTV merupakan metode paling dasar yang membantu dokter untuk mendiagnosis penyakit. Selain itu, dokter juga akan lebih mudah merencanakan terapi medis yang tepat untuk pasien.</p>",
+                            "<p>Ada empat komponen tanda vital utama yang harus dipantau secara rutin oleh tenaga kesehatan yaitu <a href='https://www.honestdocs.id/tekanan-darah' target='_blank'>tekanan darah</a>, denyut nadi, laju pernapasan, dan suhu tubuh. Pemeriksaan tanda vital dilakukan pada saat pertama kali Anda datang ke fasilitas kesehatan untuk mendapatkan perawatan medis.</p>",
+                            "<p>Apabila Anda dicurigai sedang menderita kondisi medis yang serius, maka tanda vital akan dipantau secara berulang dan terus dilakukan evalauasi untuk menilai perkembangan penyakit. Rrosedur ini&nbsp;akan terus dilakukan sampai nilai TTV kembali normal.&nbsp;</p>",
+                            "<h2>Jenis-jenis pengukuran tanda vital</h2>",
+                            "<h3>1. Tekanan darah</h3>",
+                            "<p>Tekanan darah merupakan kekuatan pemompaan darah yang dilakukan oleh jantung untuk mengalirkan darah di dalam arteri (<a href='https://www.honestdocs.id/fungsi-pembuluh-darah-arteri-dan-vena' target='_blank'>pembuluh darah</a>) hingga ke seluruh tubuh. Pengukuran tekanan darah dilakukan dengan menggunakan tensimeter dan stetoskop.</p>",
+                            "<p>Tekanan darah dibagi menjadi dua bagian, yaitu sistolik dan diastolik. Tekanan sistolik merupakan bagian atas yang&nbsp;menunjukkan tekanan darah di dalam arteri pada saat jantung berkontraksi untuk memompa darah ke seluruh bagian tubuh. Sedangkan tekanan diastolik menunjukkan tekanan darah di dalam arteri pada saat jantung beristirahat untuk mengisi darah dari seluruh bagian tubuh.<br></p>",
+                            "<p><a href='https://www.honestdocs.id/tekanan-darah-normal-tinggi-dan-tips-menjaganya' target='_blank'>Tekanan darah normal</a> untuk orang dewasa adalah 120/80 mmHg. Sementara pada bayi dan anak-anak, tekanan darah normal lebih rendah daripada dewasa.&nbsp;</p>",
+                            "<p>Tekanan darah normal dipengaruhi oleh beberapa faktor, yaitu aktivitas fisik, diet dan usia.&nbsp;Maka untuk dapat melakukan pengukuran tekanan darah dengan tepat, sebaiknya beristirahatlah&nbsp;dengan santai terlebih dahulu selama sekitar 15 menit sebelum pengukuran dilakukan.</p>",
+                            "<p>Baca Selengkapnya:&nbsp;TTV Normal Bayi Baru Lahir, Balita, dan Anak-Anak<br></p>",
+                            "<h3>2. Denyut nadi</h3>",
+                            "<p>Denyut nadi merupakan frekuensi pemompaan jantung pada arteri.Pengukuran denyut nadi bermanfaat untuk menentukan irama dan kekuatan nadi.</p>",
+                            "<p>Pengukuran denyut nadi dilakukan dengan menggunakan stetoskop atau menggunakan jari yang ditekankan pada nadi penderita&nbsp;selama 60 detik. Pengukuran denyut nandi dapat dilakukan pada 5 jenis arteri, yaitu:</p>",
+                            "<ul><li>Arteri radialis (pergelangan tangan)</li><li>Arteri brakialis (siku)</li><li><a href='https://www.honestdocs.id/arteri-karotid' target='_blank'>Arteri karotis</a> (leher)</li><li>Arteri poplitea (belakang lutut)</li><li>Arteri dorsalis pedis (kaki)</li></ul>",
+                            "<p><a href='https://www.honestdocs.id/denyut-nadi-normal-dewasa-dan-anak' target='_blank'>Denyut nadi normal</a> untuk orang dewasa adalah 60-100 kali per menit, dapat disebut juga dengan <a href='https://www.honestdocs.id/detak-jantung-normal' target='_blank'>detak jantung normal</a>. Pada bayi dan anak-anak, denyut nadi normal cenderung&nbsp;lebih tinggi daripada orang dewasa.</p>",
+                            "<p>Denyut nadi seseorang dapat meningkat akibat beberapa faktor, seperti olahraga, emosi, kondisi sakit, atau mengalami cedera.&nbsp;Sama seperti pengukuran tekanan darah, pengukuran denyut nadi juga sebaiknya dilakukan setelah seseorang beristirahat terlebih dahulu.</p>",
+                            "<h3> 3. Laju pernapasan</h3>",
+                            "<p>Laju pernapasan sama dengan frekuensi pernapasan. Pengukuran laju pernapasan dilakukan dengan menghitung jumlah pengembangan dada seseorang untuk menarik napas dalam waktu satu menit.</p>",
+                            "<p>Pengukuran laju pernapasan umumnya&nbsp;dilakukan pada saat istirahat. Metode ini bertujuan untuk menilai sulit atau tidaknya seseorang bernapas.</p>",
+                            "<p>Respirasi normal atau pernapasan normal untuk orang dewasa adalah 12-20&nbsp;kali per menit. Sementara pada bayi dan anak-anak, laju perapasan normal lebih tinggi daripada orang dewasa.</p>",
+                            "<p>Laju pernapasan dapat mengalami peningkatan dengan olahraga, <a href='https://www.honestdocs.id/demam' target='_blank'>demam</a> atau karena penyakit paru, atau kondisi medis lainnya.</p>",
+                            "<h3>4. Suhu tubuh</h3>",
+                            "<p>Suhu tubuh merupakan ukuran panas badan seseorang. Pengukuran suhu tubuh dilakukan dengan menggunakan alat ukur suhu&nbsp;yang disebut dengan termometer, bisa dilakukan melalui&nbsp;mulut, ketiak, dubur, telinga, dan kulit dahi.</p>",
+                            "<p><strong><a href='https://www.honestdocs.id/suhu-tubuh-normal-manusia-bayi-dewasa' target='_blank'>Suhu tubuh normal</a> untuk orang dewasa adalah 36,5- 37,5 derajat Celsius. Suhu tubuh seseorang&nbsp;bisa berubah-ubah, biasanya dipengaruhi oleh&nbsp;aktivitas, makanan, konsumsi cairan, cuaca, dan jenis kelamin, terutama wanita pada saat mengalami masa subur.</strong></p>",
+                            "<p>Baca Juga: Suhu Tubuh Normal Manusia, dari Bayi Hingga Dewasa</p>",
+                            "<br>"
+                        ]
+                    },
+                    "reference": {
+                        "example": [
+                            "<cite>Johns Hopkins Medicine. Vital Signs (Body Temperature, Pulse Rate, Respiration Rate, Blood Pressure). (<a href='https://www.hopkinsmedicine.org/health/conditions-and-diseases/vital-signs-body-temperature-pulse-rate-respiration-rate-blood-pressure' target='_blank'>https://www.hopkinsmedicine.org/health/conditions-and-diseases/vital-signs-body-temperature-pulse-rate-respiration-rate-blood-pressure</a>).</cite>",
+                            "<cite>Medscape. Normal Vital Signs. (<a href='https://emedicine.medscape.com/article/2172054-overview' target='_blank'>https://emedicine.medscape.com/article/2172054-overview</a>). 1 November 2018.</cite>",
+                            "<cite>Healthline. Getting a Physical Examination. (<a href='https://www.healthline.com/health/getting-physical-examination' target='_blank'>https://www.healthline.com/health/getting-physical-examination</a>). 2 Mei 2017.</cite>"
+                        ]
+                    }
+                }
+            },
+            "article": {
+                "type": "object",
+                "properties": {
+                    "title": {
+                        "type": "string",
+                        "example": "Tanda Tanda Vital (TTV): Pemeriksaan dan Nilai Normal"
+                    },
+                    "pictureUrl": {
+                        "type": "string",
+                        "example": "https://static.honestdocs.id/989x500/webp/system/blog_articles/main_hero_images/000/001/248/original/Tanda_Tanda_Vital_%28TTV%29_Pemeriksaan_dan_Nilai_Normal.jpg"
+                    },
+                    "authorId": {
+                        "$ref": "#/components/example/authorId"
+                    },
+                    "reviewerId": {
+                        "$ref": "#/components/example/reviewerId"
+                    },
+                    "isValidated": {
+                        "type": "boolean",
+                        "example": false
+                    },
+                    "publishDate": {
+                        "type": "string",
+                        "example": "2020-01-01T00:00:00.000Z"
+                    },
+                    "lastUpdateDate": {
+                        "type": "string",
+                        "example": "2020-01-01T00:00:00.000Z"
+                    },
+                    "lastReviewDate": {
+                        "type": "string",
+                        "example": "2020-01-01T00:00:00.000Z"
+                    },
+                    "timeToRead": {
+                        "type": "integer",
+                        "example": 3
+                    },
+                    "summary": {
+                        "example": [
+                            "Pemeriksaan tanda-tanda vital (TTV) merupakan salah satu metode pemeriksaan untuk mengetahui ada tidaknya gangguan pada&nbsp;fungsi tubuh dasar. Hal ini bertujuan untuk&nbsp;membantu dokter mendiagnosis suatu penyakit dan merencanakan perawatan medis yang tepat.",
+                            "Dalam pemeriksaan&nbsp;tanda-tanda vital (TTV) ada 4 komponen tanda vital utama yang harus dipantau secara rutin dan seharusnya berada dalam kondisi normal, yaitu&nbsp;tekanan darah, denyut nadi, laju pernapasan, dan suhu tubuh.",
+                            "Tekanan darah normal&nbsp;untuk orang dewasa umumnya berada pada&nbsp;120/80 mmHg dengan respirasi normal atau laju pernapasan normal sekitar 12-20&nbsp;kali per menit. Sementara itu&nbsp;suhu tubuh normal&nbsp;untuk orang dewasa adalah 36,5- 37,5 derajat celsius.",
+                            "Untuk mendapatkan hasil TTV yang lebih valid, Anda juga bisa melakukan medical check up <a href='http://hdmall.id/pemeriksaan-kesehatan/paket-medical-check-up?utm_source=internal&amp;utm_medium=article&amp;utm_campaign=medical-check-up'>hanya di sini.</a>"
+                        ]
+                    },
+                    "content": {
+                        "example": [
+                            "<p>Untuk mendeteksi gangguan pada tubuh, dokter dapat melakukan pemeriksaan tanda-tanda vital (TTV). Ini merupakan metode atau pemeriksaan fungsi tubuh yang paling mendasar guna membantu dokter dalam mendiagnosis penyakit dan merencanakan perawatan medis yang tepat. Apa saja jenis pemeriksaan TTV? Berikut ulasan lengkapnya.</p>",
+                            "<h2>Apa itu TTV?</h2>",
+                            "<p>Pemeriksaan tanda-tanda vital atau TTV adalah prosedur pemeriksaan yang dilakukan untuk mengetahui tanda vital seseorang. Hal ini bertujuan untuk mendeteksi gangguan, kelainan, atau perubahan pada fungsi organ tubuh.</p>",
+                            "<p>Pemeriksaan TTV merupakan metode paling dasar yang membantu dokter untuk mendiagnosis penyakit. Selain itu, dokter juga akan lebih mudah merencanakan terapi medis yang tepat untuk pasien.</p>",
+                            "<p>Ada empat komponen tanda vital utama yang harus dipantau secara rutin oleh tenaga kesehatan yaitu <a href='https://www.honestdocs.id/tekanan-darah' target='_blank'>tekanan darah</a>, denyut nadi, laju pernapasan, dan suhu tubuh. Pemeriksaan tanda vital dilakukan pada saat pertama kali Anda datang ke fasilitas kesehatan untuk mendapatkan perawatan medis.</p>",
+                            "<p>Apabila Anda dicurigai sedang menderita kondisi medis yang serius, maka tanda vital akan dipantau secara berulang dan terus dilakukan evalauasi untuk menilai perkembangan penyakit. Rrosedur ini&nbsp;akan terus dilakukan sampai nilai TTV kembali normal.&nbsp;</p>",
+                            "<h2>Jenis-jenis pengukuran tanda vital</h2>",
+                            "<h3>1. Tekanan darah</h3>",
+                            "<p>Tekanan darah merupakan kekuatan pemompaan darah yang dilakukan oleh jantung untuk mengalirkan darah di dalam arteri (<a href='https://www.honestdocs.id/fungsi-pembuluh-darah-arteri-dan-vena' target='_blank'>pembuluh darah</a>) hingga ke seluruh tubuh. Pengukuran tekanan darah dilakukan dengan menggunakan tensimeter dan stetoskop.</p>",
+                            "<p>Tekanan darah dibagi menjadi dua bagian, yaitu sistolik dan diastolik. Tekanan sistolik merupakan bagian atas yang&nbsp;menunjukkan tekanan darah di dalam arteri pada saat jantung berkontraksi untuk memompa darah ke seluruh bagian tubuh. Sedangkan tekanan diastolik menunjukkan tekanan darah di dalam arteri pada saat jantung beristirahat untuk mengisi darah dari seluruh bagian tubuh.<br></p>",
+                            "<p><a href='https://www.honestdocs.id/tekanan-darah-normal-tinggi-dan-tips-menjaganya' target='_blank'>Tekanan darah normal</a> untuk orang dewasa adalah 120/80 mmHg. Sementara pada bayi dan anak-anak, tekanan darah normal lebih rendah daripada dewasa.&nbsp;</p>",
+                            "<p>Tekanan darah normal dipengaruhi oleh beberapa faktor, yaitu aktivitas fisik, diet dan usia.&nbsp;Maka untuk dapat melakukan pengukuran tekanan darah dengan tepat, sebaiknya beristirahatlah&nbsp;dengan santai terlebih dahulu selama sekitar 15 menit sebelum pengukuran dilakukan.</p>",
+                            "<p>Baca Selengkapnya:&nbsp;TTV Normal Bayi Baru Lahir, Balita, dan Anak-Anak<br></p>",
+                            "<h3>2. Denyut nadi</h3>",
+                            "<p>Denyut nadi merupakan frekuensi pemompaan jantung pada arteri.Pengukuran denyut nadi bermanfaat untuk menentukan irama dan kekuatan nadi.</p>",
+                            "<p>Pengukuran denyut nadi dilakukan dengan menggunakan stetoskop atau menggunakan jari yang ditekankan pada nadi penderita&nbsp;selama 60 detik. Pengukuran denyut nandi dapat dilakukan pada 5 jenis arteri, yaitu:</p>",
+                            "<ul><li>Arteri radialis (pergelangan tangan)</li><li>Arteri brakialis (siku)</li><li><a href='https://www.honestdocs.id/arteri-karotid' target='_blank'>Arteri karotis</a> (leher)</li><li>Arteri poplitea (belakang lutut)</li><li>Arteri dorsalis pedis (kaki)</li></ul>",
+                            "<p><a href='https://www.honestdocs.id/denyut-nadi-normal-dewasa-dan-anak' target='_blank'>Denyut nadi normal</a> untuk orang dewasa adalah 60-100 kali per menit, dapat disebut juga dengan <a href='https://www.honestdocs.id/detak-jantung-normal' target='_blank'>detak jantung normal</a>. Pada bayi dan anak-anak, denyut nadi normal cenderung&nbsp;lebih tinggi daripada orang dewasa.</p>",
+                            "<p>Denyut nadi seseorang dapat meningkat akibat beberapa faktor, seperti olahraga, emosi, kondisi sakit, atau mengalami cedera.&nbsp;Sama seperti pengukuran tekanan darah, pengukuran denyut nadi juga sebaiknya dilakukan setelah seseorang beristirahat terlebih dahulu.</p>",
+                            "<h3> 3. Laju pernapasan</h3>",
+                            "<p>Laju pernapasan sama dengan frekuensi pernapasan. Pengukuran laju pernapasan dilakukan dengan menghitung jumlah pengembangan dada seseorang untuk menarik napas dalam waktu satu menit.</p>",
+                            "<p>Pengukuran laju pernapasan umumnya&nbsp;dilakukan pada saat istirahat. Metode ini bertujuan untuk menilai sulit atau tidaknya seseorang bernapas.</p>",
+                            "<p>Respirasi normal atau pernapasan normal untuk orang dewasa adalah 12-20&nbsp;kali per menit. Sementara pada bayi dan anak-anak, laju perapasan normal lebih tinggi daripada orang dewasa.</p>",
+                            "<p>Laju pernapasan dapat mengalami peningkatan dengan olahraga, <a href='https://www.honestdocs.id/demam' target='_blank'>demam</a> atau karena penyakit paru, atau kondisi medis lainnya.</p>",
+                            "<h3>4. Suhu tubuh</h3>",
+                            "<p>Suhu tubuh merupakan ukuran panas badan seseorang. Pengukuran suhu tubuh dilakukan dengan menggunakan alat ukur suhu&nbsp;yang disebut dengan termometer, bisa dilakukan melalui&nbsp;mulut, ketiak, dubur, telinga, dan kulit dahi.</p>",
+                            "<p><strong><a href='https://www.honestdocs.id/suhu-tubuh-normal-manusia-bayi-dewasa' target='_blank'>Suhu tubuh normal</a> untuk orang dewasa adalah 36,5- 37,5 derajat Celsius. Suhu tubuh seseorang&nbsp;bisa berubah-ubah, biasanya dipengaruhi oleh&nbsp;aktivitas, makanan, konsumsi cairan, cuaca, dan jenis kelamin, terutama wanita pada saat mengalami masa subur.</strong></p>",
+                            "<p>Baca Juga: Suhu Tubuh Normal Manusia, dari Bayi Hingga Dewasa</p>",
+                            "<br>"
+                        ]
+                    },
+                    "reference": {
+                        "example": [
+                            "<cite>Johns Hopkins Medicine. Vital Signs (Body Temperature, Pulse Rate, Respiration Rate, Blood Pressure). (<a href='https://www.hopkinsmedicine.org/health/conditions-and-diseases/vital-signs-body-temperature-pulse-rate-respiration-rate-blood-pressure' target='_blank'>https://www.hopkinsmedicine.org/health/conditions-and-diseases/vital-signs-body-temperature-pulse-rate-respiration-rate-blood-pressure</a>).</cite>",
+                            "<cite>Medscape. Normal Vital Signs. (<a href='https://emedicine.medscape.com/article/2172054-overview' target='_blank'>https://emedicine.medscape.com/article/2172054-overview</a>). 1 November 2018.</cite>",
+                            "<cite>Healthline. Getting a Physical Examination. (<a href='https://www.healthline.com/health/getting-physical-examination' target='_blank'>https://www.healthline.com/health/getting-physical-examination</a>). 2 Mei 2017.</cite>"
+                        ]
                     }
                 }
             },
@@ -169,15 +525,23 @@
             }
         },
         "example": {
-            "id": {
+            "authorId": {
                 "type": "string",
                 "example": "659b98ca097370f1c004ff77"
             },
+            "reviewerId": {
+                "type": "string",
+                "example": "659b9eca0afdbab1b2c7b4f7"
+            },
             "user": {
-                "Name": "ADELIA MARISTA SAFITRI, S.K.M",
+                "name": "ADELIA MARISTA SAFITRI, S.K.M",
                 "profilePictureUrl": "https://static.honestdocs.id/system/image_attachments/images/000/025/559/original/author-adelia-marista.jpg",
                 "role": "Author",
                 "description": "Adelia Marista Safitri, lulusan dari Universitas Diponegoro dengan gelar Sarjana Kesehatan Masyarakat tahun 2017. Mengawali karir sebagai jurnalis dan penulis di beberapa media kesehatan. Saat ini bergabung di HonestDocs sebagai penulis dan editor dengan harapan dapat memberikan informasi kesehatan yang sederhana tapi berkualitas, tepercaya, dan mudah dipahami oleh seluruh masyarakat."
+            },
+            "articleId": {
+                "type": "string",
+                "example": "659bb0bc4c888a159fc262f7"
             }
         }
     }
