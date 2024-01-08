@@ -60,7 +60,21 @@ const addArticle = async (req, res) => {
     }
 };
 
-const getAllArticles = async (req, res) => {};
+const getAllArticles = async (req, res) => {
+    try {
+        //Get all articles
+        const articles = await Article.find();
+
+        //Return
+        res.status(200).json({
+            status: "success",
+            message: "Articles found",
+            data: articles,
+        });
+    } catch (error) {
+        res.status(500).json({ status: "error", message: error.message });
+    }
+};
 
 const getArticle = async (req, res) => {
     const { articleId } = req.params;
@@ -193,10 +207,58 @@ const deleteArticle = async (req, res) => {
     }
 };
 
+const reviewArticle = async (req, res) => {
+    const { articleId } = req.params;
+
+    const { reviewerId, isValidated } = req.body;
+
+    try {
+        //Check if article exists in articles collection
+        const article = await Article.findById(articleId);
+
+        //If article does not exist, return error
+        if (!article) {
+            return res
+                .status(400)
+                .json({ status: "error", message: "Article does not exist" });
+        }
+
+        //Check if reviewer exists in users collection
+        const reviewer = await User.findById(reviewerId);
+
+        //If reviewer does not exist, return error
+        if (!reviewer) {
+            return res
+                .status(400)
+                .json({ status: "error", message: "Reviewer does not exist" });
+        }
+
+        //Update article details
+        await ArticleDetails.findOneAndUpdate(
+            { articleId },
+            {
+                reviewerId,
+                isValidated,
+                lastReviewDate: Date.now(),
+            }
+        );
+
+        //Return
+        res.status(200).json({
+            status: "success",
+            message: "Article reviewed",
+        });
+
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+}
+
 module.exports = {
     addArticle,
     getAllArticles,
     getArticle,
     updateArticle,
     deleteArticle,
+    reviewArticle,
 };
