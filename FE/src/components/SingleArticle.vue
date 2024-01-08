@@ -7,29 +7,31 @@ const props = defineProps({
         required: true,
     },
 });
+
+const detailRoute = "/detailArtikel/" + props.article.id;
 </script>
 
 <template>
-    <div class="news__cart news__cart--width" data-id="8772">
+    <div class="news__cart news__cart--width">
         <div class="news__inner">
-            <RouterLink to="/detailArtikel" class="news__image"
+            <router-link :to="detailRoute" class="news__image"
                 ><img
                     class="ls-is-cached lazyloaded"
                     :alt= "article.title"
                     :src= "article.pictureUrl"
                     loading="lazy"
                 />
-            </RouterLink>
+            </router-link>
             <div class="news__description">
-                <RouterLink to="/detailArtikel" class="news__big">{{
+                <router-link :to="detailRoute" class="news__big">{{
                     article.title
-                }}</RouterLink>
+                }}</router-link>
                 <p class="news__small"></p>
             </div>
             <div class="news__item">
-                <RouterLink to="/detailArtikel" class="news__link"
+                <router-link :to="detailRoute" class="news__link"
                     >Baca Selengkapnya
-                </RouterLink>
+                </router-link>
             </div>
         </div>
     </div>
