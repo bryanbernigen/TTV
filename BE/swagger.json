@@ -1,0 +1,184 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Klinik Pintar API",
+        "description": "API for Klinik Pintar Backend",
+        "version": "1.0.0"
+    },
+    "servers": [
+        {
+            "url": "http://localhost:5000/api",
+            "description": "Local server"
+        }
+    ],
+    "tags:": [
+        {
+            "name": "User",
+            "description": "API for user in the system"
+        },
+        {
+            "article": "Article",
+            "description": "API for article in the system"
+        }
+    ],
+    "paths": {
+        "/user/add": {
+            "post": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "Add new user",
+                "description": "Add new user",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/User"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "201": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "example": "success"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "User added successfully"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid input",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorSchema400"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/user/{id}": {
+            "get": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "Get user by id",
+                "description": "Get user by id",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of user to return",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/components/example/id"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "example": "success"
+                                        },
+                                        "user": {
+                                            "$ref": "#/components/schemas/User"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "User not found"
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "User": {
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string",
+                        "example": "ADELIA MARISTA SAFITRI, S.K.M"
+                    },
+                    "profilePictureUrl": {
+                        "type": "string",
+                        "example": "https://static.honestdocs.id/system/image_attachments/images/000/025/559/original/author-adelia-marista.jpg"
+                    },
+                    "role": {
+                        "type": "string",
+                        "example": "Author"
+                    },
+                    "description": {
+                        "type": "string",
+                        "example": "Adelia Marista Safitri, lulusan dari Universitas Diponegoro dengan gelar Sarjana Kesehatan Masyarakat tahun 2017. Mengawali karir sebagai jurnalis dan penulis di beberapa media kesehatan. Saat ini bergabung di HonestDocs sebagai penulis dan editor dengan harapan dapat memberikan informasi kesehatan yang sederhana tapi berkualitas, tepercaya, dan mudah dipahami oleh seluruh masyarakat."
+                    }
+                }
+            },
+            "ErrorSchema400": {
+                "type": "object",
+                "properties": {
+                    "status": {
+                        "type": "string",
+                        "example": "error"
+                    },
+                    "message": {
+                        "type": "string",
+                        "example": "Invalid input"
+                    }
+                }
+            },
+            "ErrorSchema404": {
+                "type": "object",
+                "properties": {
+                    "status": {
+                        "type": "string",
+                        "example": "error"
+                    },
+                    "message": {
+                        "type": "string",
+                        "example": "Not found"
+                    }
+                }
+            }
+        },
+        "example": {
+            "id": {
+                "type": "string",
+                "example": "659b98ca097370f1c004ff77"
+            },
+            "user": {
+                "Name": "ADELIA MARISTA SAFITRI, S.K.M",
+                "profilePictureUrl": "https://static.honestdocs.id/system/image_attachments/images/000/025/559/original/author-adelia-marista.jpg",
+                "role": "Author",
+                "description": "Adelia Marista Safitri, lulusan dari Universitas Diponegoro dengan gelar Sarjana Kesehatan Masyarakat tahun 2017. Mengawali karir sebagai jurnalis dan penulis di beberapa media kesehatan. Saat ini bergabung di HonestDocs sebagai penulis dan editor dengan harapan dapat memberikan informasi kesehatan yang sederhana tapi berkualitas, tepercaya, dan mudah dipahami oleh seluruh masyarakat."
+            }
+        }
+    }
+}
