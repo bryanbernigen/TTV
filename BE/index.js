@@ -1,6 +1,7 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const swaggerUi = require("swagger-ui-express");
+const cors = require("cors");
 require("dotenv").config();
 
 //Own modules
@@ -10,6 +11,7 @@ const swaggerDocument = require("./swagger.json");
 //Setup express
 const app = express();
 app.use(express.json());
+app.use(cors());
 
 
 //Connect to DB
