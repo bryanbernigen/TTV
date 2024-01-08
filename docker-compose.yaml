@@ -1,0 +1,13 @@
+version: "3"
+
+services:
+    be:
+        container_name: klinik-pintar-be
+        build:
+            context: .
+            dockerfile: BE-Dockerfile
+        ports:
+            - "5000:5000"
+        env_file:
+            - BE/.env
+        command: node BE/index.js
