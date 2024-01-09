@@ -12,7 +12,9 @@ const route = useRoute();
 const articleId = route.params.id;
 const fetchData = async () => {
     await axios
-        .get("http://localhost:5000/api/article/" + articleId)
+        .get("http://localhost:5000/api/article/" + articleId, {
+            withCredentials: false,
+        })
         .then((res) => {
             if (res.status === 200) {
                 article.value = res.data.data;
@@ -26,7 +28,9 @@ const fetchData = async () => {
 
 const fetchAuthorAndReviewer = async () => {
     await axios
-        .get("http://localhost:5000/api/user/" + article.value.authorId)
+        .get("http://localhost:5000/api/user/" + article.value.authorId, {
+            withCredentials: false,
+        })
         .then((res) => {
             if (res.status === 200) {
                 article.value.author = res.data.user;
@@ -36,7 +40,9 @@ const fetchAuthorAndReviewer = async () => {
             }
         });
     await axios
-        .get("http://localhost:5000/api/user/" + article.value.reviewerId)
+        .get("http://localhost:5000/api/user/" + article.value.reviewerId, {
+            withCredentials: false,
+        })
         .then((res) => {
             if (res.status === 200) {
                 article.value.reviewer = res.data.user;
@@ -55,8 +61,11 @@ await fetchAuthorAndReviewer();
         <div class="container container--fluid">
             <div class="container__inners">
                 <div class="content content--type">
-                  <LeftContent :title="article.title" article-type="Kesehatan Fisik"></LeftContent>
-                  <MainContent :article="article"></MainContent>
+                    <LeftContent
+                        :title="article.title"
+                        article-type="Kesehatan Fisik"
+                    ></LeftContent>
+                    <MainContent :article="article"></MainContent>
                 </div>
             </div>
         </div>

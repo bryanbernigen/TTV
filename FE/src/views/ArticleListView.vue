@@ -7,21 +7,25 @@ import axios from "axios";
 const articles = ref([]);
 
 const fetchArticles = async () => {
-    await axios.get("http://localhost:5000/api/article/all").then((res) => {
-        if (res.status === 200) {
-            console.log(res.data);
-            res.data.data.forEach((element) => {
-                articles.value.push({
-                    id: element._id,
-                    title: element.title,
-                    pictureUrl: element.pictureUrl,
+    await axios
+        .get("http://localhost:5000/api/article/all", {
+            withCredentials: false,
+        })
+        .then((res) => {
+            if (res.status === 200) {
+                console.log(res.data);
+                res.data.data.forEach((element) => {
+                    articles.value.push({
+                        id: element._id,
+                        title: element.title,
+                        pictureUrl: element.pictureUrl,
+                    });
                 });
-            });
-        } else {
-            console.log("Error with response");
-            console.log(res);
-        }
-    });
+            } else {
+                console.log("Error with response");
+                console.log(res);
+            }
+        });
 };
 await fetchArticles();
 </script>

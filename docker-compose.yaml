@@ -11,3 +11,12 @@ services:
         env_file:
             - BE/.env
         command: node BE/index.js
+    fe:
+        container_name: klinik-pintar-fe
+        build:
+            context: .
+            dockerfile: FE-Dockerfile
+        ports:
+            - "5173:5173"
+            - "5174:5174"
+        command: npm run host
