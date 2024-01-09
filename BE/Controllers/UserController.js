@@ -4,10 +4,10 @@ const addUser = async (req, res) => {
     const { name, profilePictureUrl, role, description } = req.body;
 
     const newUser = new User({
-        Name: name,
-        ProfilePictureUrl: profilePictureUrl,
-        Role: role,
-        Description: description,
+        name: name,
+        profilePictureUrl: profilePictureUrl,
+        role: role,
+        description: description,
     });
 
     try {
